@@ -1,0 +1,10 @@
+[
+  {
+    "args": {
+      "base_file": "${packages}/Gem Description/Gem Description.sublime-settings",
+      "default": "// Gem Description - User\n{\n\t$0\n}\n"
+    },
+    "caption": "Gem Description: Settings",
+    "command": "edit_settings"
+  }
+]

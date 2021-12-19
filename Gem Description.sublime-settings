@@ -1,0 +1,9 @@
+{
+  // The ruby command that will be used.
+  // If you use something like asdf, you may need to add the full path, as in
+  // "/Users/fnando/.asdf/shims/ruby".
+  "command": "ruby",
+
+  // Enable debug mode.
+  "debug": false
+}
