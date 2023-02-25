@@ -44,8 +44,8 @@ def write_cache(gem_name, info):
 def fetch_gem_info(gem_name):
     command = [
         settings("command"), "-r", "json", "-e",
-        "gem '%s'; spec = Gem.loaded_specs['%s']; puts JSON.dump(summary: spec.summary, url: spec.homepage)"
-        % (gem_name, gem_name)
+        "gem '%s'; spec = Gem.loaded_specs['%s']; puts JSON.dump(summary: spec.summary, url: spec.homepage || 'https://rubygems.org/gems/%s')"
+        % (gem_name, gem_name, gem_name)
     ]
 
     asdf_dir = os.path.join(Path.home(), ".asdf", "shims")
@@ -56,13 +56,18 @@ def fetch_gem_info(gem_name):
                           cwd=os.getcwd(),
                           universal_newlines=True) as result:
 
-        if result.returncode != None:
-            debug("stdout:", result.stdout.read())
-            debug("stderr:", result.stderr.read())
-            debug("exit code:", result.returncode)
-            return None
+        result.wait()
+
+        stdout = result.stdout.read()
+
+        debug("stdout:", stdout)
+        debug("exit code:", result.returncode)
+        debug("stderr:", result.stderr.read())
+
+        if result.returncode == 0:
+            return json.loads(stdout)
         else:
-            return json.loads(result.stdout.read())
+            return None
 
 
 def get_gem_info(gem_name):
