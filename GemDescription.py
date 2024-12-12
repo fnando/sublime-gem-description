@@ -42,8 +42,10 @@ def write_cache(gem_name, info):
 
 
 def fetch_gem_info(gem_name):
+    bin = os.path.expanduser(settings("command"))
+
     command = [
-        settings("command"), "-r", "json", "-e",
+        bin, "-r", "json", "-e",
         "gem '%s'; spec = Gem.loaded_specs['%s']; puts JSON.dump(summary: spec.summary, url: spec.homepage || 'https://rubygems.org/gems/%s')"
         % (gem_name, gem_name, gem_name)
     ]
@@ -83,6 +85,7 @@ def get_gem_info(gem_name):
 
 
 class InsertGemDescriptionCommand(sublime_plugin.TextCommand):
+
     def run(self, edit, row=None, description=None, url=None):
         column_size = min(
             sublime.active_window().active_view().settings().get("rulers"))
@@ -111,6 +114,7 @@ class InsertGemDescriptionCommand(sublime_plugin.TextCommand):
 
 
 class GemDescription(sublime_plugin.EventListener):
+
     def on_hover(self, view, point, hover_zone):
         enabled = view.match_selector(point, "source.ruby")
 
