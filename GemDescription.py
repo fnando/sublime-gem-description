@@ -50,8 +50,6 @@ def fetch_gem_info(gem_name):
         % (gem_name, gem_name, gem_name)
     ]
 
-    asdf_dir = os.path.join(Path.home(), ".asdf", "shims")
-
     with subprocess.Popen(command,
                           stdout=subprocess.PIPE,
                           stderr=subprocess.PIPE,
